@@ -19,11 +19,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const result = await response.json();
 
-        if(result.status_code === 200){
+        if(result.status_code == 200){
             localStorage.setItem('token', result.token);
             window.location.href = '../client/views/dashboard.html';
         }else{
-            alert('Error de autenticación: ' + result.message);
+            alert('Error de autenticación: ' + result.mensaje);
         }
     }
 

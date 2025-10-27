@@ -60,7 +60,7 @@ def login(usuario: Usuario):
     for user in lista_tokens:
         if user["usuario"] == usuario.usuario and user["contraseña"] == usuario.contraseña:
             return JSONResponse(content={"token": user["token"], "status_code": 200}, status_code=200)
-    return JSONResponse(content={"mensaje": "Credenciales inválidas", "status_code": 401}, status_code=401)
+    return JSONResponse(content={"mensaje": "Credenciales inválidas", "status_code": 200}, status_code=200)
 
 @app.post("/test")
 def test(token: str):
