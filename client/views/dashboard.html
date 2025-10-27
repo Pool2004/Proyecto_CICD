@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Gestión de Tareas</title>
+    <link rel="stylesheet" href="../styles/style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header del Dashboard -->
+        <div class="dash-header">
+            <h1>📋 Dashboard de Tareas</h1>
+            <div class="user-info">
+                <span>Bienvenido, Usuario</span>
+                <button class="btn btn-secondary" onclick="logout()">Cerrar Sesión</button>
+            </div>
+        </div>
+
+        <!-- Navegación por pestañas -->
+        <div class="nav-tabs">
+            <button class="tab-btn active" onclick="showTab('create')">➕ Crear Tarea</button>
+            <button class="tab-btn" onclick="showTab('read')">📖 Leer Tareas</button>
+            <button class="tab-btn" onclick="showTab('readById')">🔍 Leer por ID</button>
+            <button class="tab-btn" onclick="showTab('update')">✏️ Actualizar</button>
+            <button class="tab-btn" onclick="showTab('delete')">🗑️ Borrar Tarea</button>
+        </div>
+
+        <!-- Contenido de las pestañas -->
+        
+        <!-- Crear Tarea -->
+        <div id="create-tab" class="tab-content active">
+            <div class="card">
+                <h2>➕ Crear Nueva Tarea</h2>
+                <form id="create-form" class="form-grid">
+                    <div class="form-group">
+                        <label for="create-title">Título de la Tarea *</label>
+                        <input type="text" id="create-title" name="title" required placeholder="Ej: Completar proyecto">
+                    </div>
+                    <div class="form-group">
+                        <label for="create-description">Descripción</label>
+                        <textarea id="create-description" name="description" rows="3" placeholder="Describe los detalles de la tarea"></textarea>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="create-priority">Prioridad</label>
+                            <select id="create-priority" name="priority">
+                                <option value="baja">🔵 Baja</option>
+                                <option value="media" selected>🟡 Media</option>
+                                <option value="alta">🔴 Alta</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="create-status">Estado</label>
+                            <select id="create-status" name="status">
+                                <option value="pendiente" selected>⏳ Pendiente</option>
+                                <option value="en_progreso">🔄 En Progreso</option>
+                                <option value="completada">✅ Completada</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="create-due-date">Fecha de Vencimiento</label>
+                        <input type="date" id="create-due-date" name="due_date">
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary">➕ Crear Tarea</button>
+                        <button type="reset" class="btn btn-secondary">🔄 Limpiar</button>
+                    </div>
+                </form>
+                <div id="create-result" class="result-message"></div>
+            </div>
+        </div>
+
+        <!-- Leer Todas las Tareas -->
+        <div id="read-tab" class="tab-content">
+            <div class="card">
+                <h2>📖 Lista de Todas las Tareas</h2>
+                <div class="controls">
+                    <button class="btn btn-primary" onclick="loadAllTasks()">🔄 Cargar Tareas</button>
+                    <select id="filter-status">
+                        <option value="">Todos los estados</option>
+                        <option value="pendiente">⏳ Pendiente</option>
+                        <option value="en_progreso">🔄 En Progreso</option>
+                        <option value="completada">✅ Completada</option>
+                    </select>
+                    <select id="filter-priority">
+                        <option value="">Todas las prioridades</option>
+                        <option value="baja">🔵 Baja</option>
+                        <option value="media">🟡 Media</option>
+                        <option value="alta">🔴 Alta</option>
+                    </select>
+                </div>
+                <div id="tasks-container" class="tasks-container">
+                    <p class="muted">Haz clic en "Cargar Tareas" para ver todas las tareas disponibles.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Leer Tarea por ID -->
+        <div id="readById-tab" class="tab-content">
+            <div class="card">
+                <h2>🔍 Buscar Tarea por ID</h2>
+                <form id="read-by-id-form" class="search-form">
+                    <div class="form-row">
+                        <div class="form-group flex-1">
+                            <label for="search-id">ID de la Tarea</label>
+                            <input type="number" id="search-id" name="task_id" required placeholder="Ej: 123" min="1">
+                        </div>
+                        <div class="form-actions-inline">
+                            <button type="submit" class="btn btn-primary">🔍 Buscar</button>
+                        </div>
+                    </div>
+                </form>
+                <div id="task-detail-container" class="task-detail-container">
+                    <p class="muted">Introduce un ID para buscar una tarea específica.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Actualizar Tarea -->
+        <div id="update-tab" class="tab-content">
+            <div class="card">
+                <h2>✏️ Actualizar Tarea</h2>
+                <form id="search-update-form" class="search-form">
+                    <div class="form-row">
+                        <div class="form-group flex-1">
+                            <label for="update-search-id">ID de la Tarea a Actualizar</label>
+                            <input type="number" id="update-search-id" name="task_id" required placeholder="Ej: 123" min="1">
+                        </div>
+                        <div class="form-actions-inline">
+                            <button type="submit" class="btn btn-primary">🔍 Cargar para Editar</button>
+                        </div>
+                    </div>
+                </form>
+                
+                <div id="update-form-container" style="display: none;">
+                    <hr>
+                    <form id="update-form" class="form-grid">
+                        <input type="hidden" id="update-id" name="id">
+                        <div class="form-group">
+                            <label for="update-title">Título de la Tarea *</label>
+                            <input type="text" id="update-title" name="title" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="update-description">Descripción</label>
+                            <textarea id="update-description" name="description" rows="3"></textarea>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="update-priority">Prioridad</label>
+                                <select id="update-priority" name="priority">
+                                    <option value="baja">🔵 Baja</option>
+                                    <option value="media">🟡 Media</option>
+                                    <option value="alta">🔴 Alta</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="update-status">Estado</label>
+                                <select id="update-status" name="status">
+                                    <option value="pendiente">⏳ Pendiente</option>
+                                    <option value="en_progreso">🔄 En Progreso</option>
+                                    <option value="completada">✅ Completada</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="update-due-date">Fecha de Vencimiento</label>
+                            <input type="date" id="update-due-date" name="due_date">
+                        </div>
+                        <div class="form-actions">
+                            <button type="submit" class="btn btn-primary">✏️ Actualizar Tarea</button>
+                            <button type="button" class="btn btn-secondary" onclick="cancelUpdate()">❌ Cancelar</button>
+                        </div>
+                    </form>
+                </div>
+                <div id="update-result" class="result-message"></div>
+            </div>
+        </div>
+
+        <!-- Borrar Tarea -->
+        <div id="delete-tab" class="tab-content">
+            <div class="card">
+                <h2>🗑️ Eliminar Tarea</h2>
+                <form id="search-delete-form" class="search-form">
+                    <div class="form-row">
+                        <div class="form-group flex-1">
+                            <label for="delete-search-id">ID de la Tarea a Eliminar</label>
+                            <input type="number" id="delete-search-id" name="task_id" required placeholder="Ej: 123" min="1">
+                        </div>
+                        <div class="form-actions-inline">
+                            <button type="submit" class="btn btn-primary">🔍 Buscar para Eliminar</button>
+                        </div>
+                    </div>
+                </form>
+                
+                <div id="delete-preview-container" style="display: none;">
+                    <hr>
+                    <div class="warning-box">
+                        <h3>⚠️ Confirmar Eliminación</h3>
+                        <p>Estás a punto de eliminar la siguiente tarea:</p>
+                        <div id="delete-task-preview" class="task-preview"></div>
+                        <div class="form-actions">
+                            <button type="button" class="btn btn-danger" onclick="confirmDelete()">🗑️ Confirmar Eliminación</button>
+                            <button type="button" class="btn btn-secondary" onclick="cancelDelete()">❌ Cancelar</button>
+                        </div>
+                    </div>
+                </div>
+                <div id="delete-result" class="result-message"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="../scripts/dashboard/util.js"></script>
+    <script>
+        // Función para cambiar entre pestañas
+        function showTab(tabName) {
+            // Ocultar todos los contenidos de pestañas
+            const tabContents = document.querySelectorAll('.tab-content');
+            tabContents.forEach(content => content.classList.remove('active'));
+            
+            // Desactivar todos los botones de pestañas
+            const tabButtons = document.querySelectorAll('.tab-btn');
+            tabButtons.forEach(btn => btn.classList.remove('active'));
+            
+            // Mostrar el contenido de la pestaña seleccionada
+            document.getElementById(tabName + '-tab').classList.add('active');
+            
+            // Activar el botón de la pestaña seleccionada
+            event.target.classList.add('active');
+        }
+
+        // Función temporal para logout
+        function logout() {
+            if (confirm('¿Estás seguro de que quieres cerrar sesión?')) {
+                window.location.href = '../index.html';
+            }
+        }
+
+        // Función para cancelar actualización
+        function cancelUpdate() {
+            document.getElementById('update-form-container').style.display = 'none';
+            document.getElementById('update-search-id').value = '';
+            document.getElementById('update-result').innerHTML = '';
+        }
+
+        // Función para cancelar eliminación
+        function cancelDelete() {
+            document.getElementById('delete-preview-container').style.display = 'none';
+            document.getElementById('delete-search-id').value = '';
+            document.getElementById('delete-result').innerHTML = '';
+        }
+
+        // Funciones placeholder para las operaciones CRUD
+        function loadAllTasks() {
+            document.getElementById('tasks-container').innerHTML = '<p class="muted">Cargando tareas... (Implementar conexión con API)</p>';
+        }
+
+        function confirmDelete() {
+            alert('Función de eliminación pendiente de implementar con la API');
+        }
+
+        // Inicialización al cargar la página
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('Dashboard cargado correctamente');
+            
+            // Aquí puedes agregar la lógica para cargar datos iniciales
+            // o configurar event listeners para los formularios
+        });
+    </script>
+</body>
+</html>
