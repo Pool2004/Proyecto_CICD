@@ -28,7 +28,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
 
-    document.getElementById('loginForm').addEventListener('submit', (e) => {
+    document.getElementById('login-form').addEventListener('submit', (e) => {
         e.preventDefault();
         login();
     });

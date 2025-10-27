@@ -23,57 +23,10 @@
                     <button type="submit" class="btn primary">Entrar</button>
                 </div>
             </form>
-            <p class="muted">Puedes usar cualquier usuario; la contraseña no se valida en servidor (demo local).</p>
+            
         </section>
 
-        <section id="dashboard" class="hidden">
-            <header class="dash-header">
-                <h2 id="welcome"></h2>
-                <div>
-                    <button id="logoutBtn" class="btn">Cerrar sesión</button>
-                </div>
-            </header>
-
-            <div class="card">
-                <h3>Crear / Añadir tarea</h3>
-                <form id="task-form" class="task-form">
-                    <input type="text" id="task-title" placeholder="Título" required>
-                    <input type="text" id="task-desc" placeholder="Descripción (opcional)">
-                    <div class="row">
-                        <button class="btn primary" type="submit">Añadir</button>
-                        <button type="button" id="clearTasks" class="btn danger">Borrar todas</button>
-                    </div>
-                </form>
-            </div>
-
-            <div class="card">
-                <h3>Tareas</h3>
-                <div class="controls">
-                    <input type="text" id="search" placeholder="Buscar por título...">
-                    <select id="filter">
-                        <option value="all">Todas</option>
-                        <option value="active">Activas</option>
-                        <option value="done">Completadas</option>
-                    </select>
-                </div>
-                <ul id="tasks-list" class="tasks-list"></ul>
-            </div>
-        </section>
-
-        <!-- Edit modal -->
-        <div id="editModal" class="modal hidden">
-            <div class="modal-content card">
-                <h3>Editar tarea</h3>
-                <form id="edit-form">
-                    <input type="text" id="edit-title" required>
-                    <input type="text" id="edit-desc">
-                    <div class="row">
-                        <button type="submit" class="btn primary">Guardar</button>
-                        <button type="button" id="cancelEdit" class="btn">Cancelar</button>
-                    </div>
-                </form>
-            </div>
-        </div>
+        
 
     </main>
 
