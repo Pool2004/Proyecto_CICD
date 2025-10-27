@@ -1,0 +1,61 @@
+:root{
+	--bg:#f4f6f8;
+	--card:#ffffff;
+	--accent:#2b7cff;
+	--danger:#e04949;
+	--muted:#6b7280;
+	--radius:10px;
+	--gap:12px;
+}
+
+*{box-sizing:border-box}
+body{font-family:Inter,Segoe UI,Arial,sans-serif;background:var(--bg);margin:0;color:#111}
+.container{max-width:980px;margin:32px auto;padding:16px}
+.card{background:var(--card);padding:16px;border-radius:var(--radius);box-shadow:0 6px 18px rgba(20,20,30,0.06);margin-bottom:16px}
+
+.hidden{display:none}
+
+/* Login */
+#login-section{max-width:420px;margin:40px auto}
+#login-section h1{margin:0 0 8px}
+#login-form label{display:block;margin-bottom:10px}
+#login-form input{width:100%;padding:10px;border:1px solid #e6e9ee;border-radius:6px}
+.muted{color:var(--muted);font-size:13px}
+
+.dash-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+
+.task-form{display:flex;gap:8px;flex-wrap:wrap}
+.task-form input{flex:1;padding:10px;border:1px solid #e6e9ee;border-radius:6px}
+
+.controls{display:flex;gap:8px;align-items:center;margin-bottom:8px}
+.controls input, .controls select{padding:8px;border:1px solid #e6e9ee;border-radius:6px}
+
+.tasks-list{list-style:none;padding:0;margin:0}
+.task-item{display:flex;gap:12px;align-items:flex-start;padding:12px;border-radius:8px;border:1px solid #f0f3f6;margin-bottom:8px}
+.task-item .left{width:36px;display:flex;align-items:center}
+.task-item .main{flex:1}
+.task-item .title{font-weight:600}
+.task-item .desc{color:var(--muted);font-size:13px;margin-top:4px}
+.task-item .meta{color:var(--muted);font-size:12px;margin-top:6px}
+.task-item .actions{display:flex;gap:8px}
+.task-item.done{opacity:0.7;text-decoration:line-through}
+.empty{color:var(--muted);padding:12px}
+
+.row{display:flex;gap:8px;margin-top:8px}
+.btn{padding:8px 12px;border-radius:8px;border:1px solid transparent;background:#fff;cursor:pointer}
+.btn.primary{background:var(--accent);color:white;border-color:rgba(43,124,255,0.9)}
+.btn.danger{background:var(--danger);color:white;border-color:rgba(224,73,73,0.9)}
+.btn.small{padding:6px 8px;font-size:13px}
+
+/* Modal */
+.modal{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,0.35);z-index:60}
+.modal-content{width:100%;max-width:520px}
+
+/* Responsive */
+@media (max-width:600px){
+	.container{padding:12px}
+	.task-form{flex-direction:column}
+}
+
+/* small helpers */
+.muted{color:var(--muted)}
